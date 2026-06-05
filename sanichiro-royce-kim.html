@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanichiro Royce Kim</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #1a1612;
+      --gray: #6b6156;
+      --light-gray: #ddd8d0;
+      --bg: #f0ebe0;
+      --white: #f7f3ec;
+      --accent: #2c2520;
+      --navy: #2b3a52;
+      --font: Arial, sans-serif;
+      --sans: Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* WATERMARK LOGO */
+    .logo-watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(80vw, 80vh);
+      height: min(80vw, 80vh);
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > *:not(.logo-watermark) {
+      position: relative;
+      z-index: 1;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--black);
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 100;
+      line-height: 1.85;
+      letter-spacing: 0.08em;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    nav .name {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav ul a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--black); }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 4rem;
+      padding-top: 5rem;
+    }
+
+    #hero .label {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    #hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 700px;
+      margin-bottom: 1.8rem;
+    }
+
+    #hero p {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--navy);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--navy);
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--navy);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--black);
+      border-color: var(--black);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 4rem;
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--light-gray);
+    }
+
+    /* ABOUT */
+    #about {
+      border-top: 1px solid var(--light-gray);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    #about .about-left h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    #about .about-right p {
+      color: var(--gray);
+      margin-bottom: 1.4rem;
+    }
+
+    .portrait {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--light-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .portrait-placeholder {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* WORK / RELEASES */
+    #work {
+      border-top: 1px solid var(--light-gray);
+      background: #ebe5d8;
+    }
+
+    #work h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 400;
+      margin-bottom: 3.5rem;
+    }
+
+    .releases {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .embeds {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .embeds iframe {
+      border-radius: 12px;
+      width: 100%;
+      border: none;
+    }
+
+    .embed-label {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.6rem;
+    }
+
+    .release-card {
+      cursor: pointer;
+    }
+
+    .release-cover {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--light-gray);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+      overflow: hidden;
+    }
+
+    .release-card:hover .release-cover { opacity: 0.75; }
+
+    .release-num {
+      font-family: var(--sans);
+      font-size: 2rem;
+      color: #ccc;
+    }
+
+    .release-title {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .release-meta {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+    }
+
+    /* CONTACT */
+    #contact {
+      border-top: 1px solid var(--light-gray);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+
+    #contact h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+    }
+
+    #contact p {
+      color: var(--gray);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--navy);
+      transition: opacity 0.2s;
+    }
+
+    .contact-link:hover { opacity: 0.4; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--light-gray);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { gap: 1.5rem; }
+      #hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .releases { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .releases { grid-template-columns: 1fr; }
+      .contact-links { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WATERMARK LOGO -->
+  <svg class="logo-watermark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1a1612" stroke-width="1.2">
+    <!-- Outer diamond -->
+    <polygon points="50,2 98,50 50,98 2,50" stroke-width="1.5"/>
+    <!-- Inner 8-pointed star made of two overlapping squares -->
+    <rect x="27" y="27" width="46" height="46" transform="rotate(0 50 50)" stroke-width="1"/>
+    <rect x="27" y="27" width="46" height="46" transform="rotate(45 50 50)" stroke-width="1"/>
+    <!-- Spoke lines from center to each diamond point -->
+    <line x1="50" y1="2"  x2="50" y2="20" stroke-width="1"/>
+    <line x1="98" y1="50" x2="80" y2="50" stroke-width="1"/>
+    <line x1="50" y1="98" x2="50" y2="80" stroke-width="1"/>
+    <line x1="2"  y1="50" x2="20" y2="50" stroke-width="1"/>
+    <!-- Center dot -->
+    <circle cx="50" cy="50" r="2.5" fill="#1a1612" stroke="none"/>
+  </svg>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="name">Sanichiro Royce Kim</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="label">Composer &middot; Music Producer</p>
+    <h1>Sanichiro<br>Royce Kim</h1>
+    <p style="font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; font-weight: 300; letter-spacing: 0.2em; color: var(--gray); margin-top: 0.6rem;">吉良 賛一郎</p>
+    <p>Making music at the edge of tradition and technology.</p>
+    <div>
+      <a href="#work" class="btn">Listen</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left">
+      <p class="section-label">About</p>
+      <h2>Music shaped by the world. Rebuilt with what's next.</h2>
+      <div class="portrait">
+        <img src="black.png" alt="Sanichiro Royce Kim at the piano" style="width:100%;height:100%;object-fit:cover;object-position:top;" />
+      </div>
+    </div>
+    <div class="about-right" style="padding-top: 4rem;">
+      <p>
+        Sanichiro Royce Kim is a Canadian composer and music producer based in Los Angeles. Born in South Korea and rooted across multiple countries including Japan, he grew up immersed in a wide range of music — from classical to trance. His formative influences span Minnie Riperton, the DeBarge family, Aiko, Ahmad Jamal, Wayne Shorter, The Magic Numbers, Armand Van Helden, The Postal Service, DJ Quik, Radiohead, and Maria Schneider.
+      </p>
+      <p>
+        His journey into music making began at 14, sparked by stumbling across explicit rap records at a local bookstore. What started as a deep dive into hip-hop gradually opened doors to other genres and scenes, eventually drawing him to New York City. There he studied music and interactive arts at The New School and Parsons School of Design, where he wrote original compositions and performed as a pianist, conductor, and choir member at venues across the city.
+      </p>
+      <p>
+        After graduating, Sanichiro stepped away from the music industry for several years. He has since returned as a music producer, bringing with him a new dimension to his practice — a fluency in AI technology. Now also working as a data scientist, he sits at the intersection of music and machine intelligence, using emerging tools to shape the sound of the current generation.
+      </p>
+
+      <div style="margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--light-gray); font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 0.95rem; line-height: 2;">
+        <p>
+          ロサンゼルスを拠点に活動するカナダ人のコンポーザー／ミュージックプロデューサー。韓国生まれ、日本にもルーツを持ち、クラシックからトランスまで幅広い音楽を聴いて育つ。ミニー・リパートン、デバージ、aiko、アフマド・ジャマル、ウェイン・ショーター、ザ・マジック・ナンバーズ、アーマンド・ヴァン・ヘルデン、ザ・ポスタル・サービス、DJクイック、レディオヘッド、マリア・シュナイダーらを敬愛する。
+        </p>
+        <p>
+          14歳のとき、地元の本屋で偶然手にしたラップのレコードをきっかけに音楽制作を始める。ヒップホップへの没頭がやがて他のジャンルへの関心を広げ、ニューヨークへと導いた。ニュースクール及びパーソンズ・スクール・オブ・デザインで音楽とインタラクティブアーツを学び、ピアニスト、指揮者、合唱団員として市内各所のステージに立った。
+        </p>
+        <p>
+          卒業後、いくつかの理由から音楽業界を離れる。長い時を経て、AIを応用した制作手法を携えミュージックプロデューサーとして復帰。データサイエンティストとしての顔も持つ彼は、AI技術を駆使して現代の音楽に新たな命を吹き込む、最前線に立つアーティストである。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <p class="section-label">Work</p>
+    <h2>Releases &amp; Projects</h2>
+    <div class="embeds">
+
+      <div>
+        <p class="embed-label">Apple Music &mdash; Anew</p>
+        <iframe
+          src="https://embed.music.apple.com/us/album/anew/6775581755"
+          height="450"
+          allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+        </iframe>
+      </div>
+
+      <div>
+        <p class="embed-label">Apple Music &mdash; Blue Bag</p>
+        <iframe
+          src="https://embed.music.apple.com/us/album/blue-bag/6775902633"
+          height="450"
+          allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+        </iframe>
+      </div>
+
+      <div>
+        <p class="embed-label">Spotify</p>
+        <iframe
+          src="https://open.spotify.com/embed/album/5sh60OvzZ7m5oJcQDhqkEi"
+          height="352"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label" style="justify-content: center;">Contact</p>
+    <h2>Let's connect.</h2>
+<div class="contact-links">
+      <a href="mailto:sroycekim@zohomail.com" class="contact-link">Email</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>&copy; 2026 Sanichiro Royce Kim</span>
+    <span>All rights reserved</span>
+  </footer>
+
+</body>
+</html>
